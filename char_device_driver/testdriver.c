@@ -13,9 +13,9 @@ MODULE_LICENSE("GPL");
 #define DATA_COUNT  11      // FIXME: HACK: allocate an extra data buffer to fix issue in mychardev_read()
 
 static char data[DATA_COUNT][80];
-static int data_len[DATA_COUNT];
-static int r_index;
-static int w_index;
+static int  data_len[DATA_COUNT];
+static int  r_index;
+static int  w_index;
 
 static int testdriver_open(struct inode *inodp, struct file *filp)
 {
@@ -29,6 +29,7 @@ static int testdriver_open(struct inode *inodp, struct file *filp)
 static int testdriver_release(struct inode *inodp, struct file *filp)
 {
     printk(KERN_INFO"[%d:%d] Releasing testdriver\n", MAJOR(inodp->i_rdev), MINOR(inodp->i_rdev));
+
     return 0;
 }
 
@@ -54,17 +55,18 @@ static ssize_t mychardev_write(struct file *filp, const char __user *buf, size_t
     copy_from_user(data[w_index], buf, count);
     data_len[w_index] = count;
     printk(KERN_INFO"[%d:%d] data = %s", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev), data[w_index]);
+
     w_index = (w_index + 1) % DATA_COUNT;
 
     return count;
 }
 
 static struct file_operations dev_fops = {
-    .owner = THIS_MODULE,
-    .open = testdriver_open,
-    .release = testdriver_release,
-    .read = mychardev_read,
-    .write = mychardev_write,
+    .owner      = THIS_MODULE,
+    .open       = testdriver_open,
+    .release    = testdriver_release,
+    .read       = mychardev_read,
+    .write      = mychardev_write
 };
 
 static int testdriver_init(void)

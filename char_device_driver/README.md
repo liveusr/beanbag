@@ -54,3 +54,7 @@
   - Use `copy_to_user()` function to write data to user buffer
   - Copy previously stored data to user buffer
   - Build and run
+  - Reference code: [click here](https://github.com/liveusr/beanbag/tree/5e0351633a7cf0208a81a3f3164e57e42286a1b4/char_device_driver)
+- **Any issue?**
+  - Why does `cat` print nothing?
+  - Fix it (Hint: return data length from read())

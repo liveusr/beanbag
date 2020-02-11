@@ -32,7 +32,7 @@ static ssize_t mychardev_read(struct file *filp, char __user *buf, size_t count,
 
     copy_to_user(buf, data, data_len);
 
-    return 0;
+    return data_len;
 }
 
 static ssize_t mychardev_write(struct file *filp, const char __user *buf, size_t count, loff_t *off)

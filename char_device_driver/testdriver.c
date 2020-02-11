@@ -10,16 +10,18 @@ MODULE_LICENSE("GPL");
 
 #define DEV_MAJOR   60
 #define DEV_NAME    "testdriver"
+#define DATA_COUNT  10
 
-static char data[80];
-static int data_len;
-static int read_flag;
+static char data[DATA_COUNT][80];
+static int data_len[DATA_COUNT];
+static int r_index;
+static int w_index;
 
 static int testdriver_open(struct inode *inodp, struct file *filp)
 {
     printk(KERN_INFO"[%d:%d] Opening testdriver\n", MAJOR(inodp->i_rdev), MINOR(inodp->i_rdev));
 
-    read_flag = 0;
+    r_index = w_index - 1;
 
     return 0;
 }
@@ -34,22 +36,22 @@ static ssize_t mychardev_read(struct file *filp, char __user *buf, size_t count,
 {
     printk(KERN_INFO"[%d:%d] Reading testdriver\n", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev));
 
-    if(read_flag == 1)
+    if(r_index < 0)
         return 0;
 
-    copy_to_user(buf, data, data_len);
-    read_flag = 1;
+    copy_to_user(buf, data[r_index], data_len[r_index]);
 
-    return data_len;
+    return data_len[r_index--];
 }
 
 static ssize_t mychardev_write(struct file *filp, const char __user *buf, size_t count, loff_t *off)
 {
     printk(KERN_INFO"[%d:%d] Writing testdriver\n", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev));
 
-    copy_from_user(data, buf, count);
-    data_len = count;
-    printk(KERN_INFO"[%d:%d] data = %s", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev), data);
+    copy_from_user(data[w_index], buf, count);
+    data_len[w_index] = count;
+    printk(KERN_INFO"[%d:%d] data = %s", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev), data[w_index]);
+    w_index++;
 
     return count;
 }

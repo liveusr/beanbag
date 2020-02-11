@@ -41,3 +41,6 @@
 - **Any issue?**
   - Why does `echo` never return?
   - Fix it (Hint: return `count` from write())
+  - Reference code: [click here](https://github.com/liveusr/beanbag/tree/e8e599ece9e024a15639559bc1843ac8ef681dfa/char_device_driver)
+- **Print device major and minor in read()/write functions**
+  - Find how to get the device number from `file` object

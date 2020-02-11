@@ -24,13 +24,13 @@ static int testdriver_release(struct inode *inodp, struct file *filp)
 
 static ssize_t mychardev_read(struct file *filp, char __user *buf, size_t count, loff_t *off)
 {
-    printk(KERN_INFO"Reading testdriver\n");
+    printk(KERN_INFO"[%d:%d] Reading testdriver\n", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev));
     return 0;
 }
 
 static ssize_t mychardev_write(struct file *filp, const char __user *buf, size_t count, loff_t *off)
 {
-    printk(KERN_INFO"Writing testdriver\n");
+    printk(KERN_INFO"[%d:%d] Writing testdriver\n", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev));
     return count;
 }
 

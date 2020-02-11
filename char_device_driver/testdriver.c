@@ -31,7 +31,7 @@ static ssize_t mychardev_read(struct file *filp, char __user *buf, size_t count,
 static ssize_t mychardev_write(struct file *filp, const char __user *buf, size_t count, loff_t *off)
 {
     printk(KERN_INFO"Writing testdriver\n");
-    return 0;
+    return count;
 }
 
 static struct file_operations dev_fops = {

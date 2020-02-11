@@ -44,3 +44,8 @@
   - Reference code: [click here](https://github.com/liveusr/beanbag/tree/e8e599ece9e024a15639559bc1843ac8ef681dfa/char_device_driver)
 - **Print device major and minor in read()/write functions**
   - Find how to get the device number from `file` object
+  - Reference code: [click here](https://github.com/liveusr/beanbag/tree/2b1067d600e5c0c0bfd7ab8cfeb3c4b6151fd5a9/char_device_driver)
+- **Read data from user**
+  - Use `copy_from_user()` function to read user buffer (signature? Hint: *linux/uaccess.h*)
+  - Store this data and data length in some global variable and print it
+  - Build and run

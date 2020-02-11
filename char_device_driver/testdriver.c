@@ -2,6 +2,7 @@
 #include <linux/module.h>   // module_init/exit(), MODULE_DESCRIPTION/AUTHOR/LICENSE
 
 #include <linux/fs.h>       // register/unregister_chrdev(), struct file_operations
+#include <linux/uaccess.h>  // copy_from_user(), copy_to_user()
 
 MODULE_DESCRIPTION("Simple Char Device Driver");
 MODULE_AUTHOR("Me <myself@i.com>");
@@ -9,6 +10,9 @@ MODULE_LICENSE("GPL");
 
 #define DEV_MAJOR   60
 #define DEV_NAME    "testdriver"
+
+static char data[80];
+static int data_len;
 
 static int testdriver_open(struct inode *inodp, struct file *filp)
 {
@@ -31,6 +35,11 @@ static ssize_t mychardev_read(struct file *filp, char __user *buf, size_t count,
 static ssize_t mychardev_write(struct file *filp, const char __user *buf, size_t count, loff_t *off)
 {
     printk(KERN_INFO"[%d:%d] Writing testdriver\n", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev));
+
+    copy_from_user(data, buf, count);
+    data_len = count;
+    printk(KERN_INFO"[%d:%d] data = %s", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev), data);
+
     return count;
 }
 

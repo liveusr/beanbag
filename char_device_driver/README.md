@@ -29,3 +29,6 @@
   - Build, `insmod` and check `dmesg` output
   - Read/write to device file and check `dmesg` output
   - `rmmod` and check `dmesg` output
+  - Reference code: [click here](https://github.com/liveusr/beanbag/tree/747e9751642f5859abc2eea7f094658e63103b04/char_device_driver)
+- **Print device major and minor number in open()/release() functions**
+  - Find how to get the device number from `inode` object

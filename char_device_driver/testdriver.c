@@ -12,13 +12,13 @@ MODULE_LICENSE("GPL");
 
 static int testdriver_open(struct inode *inodp, struct file *filp)
 {
-    printk(KERN_INFO"Opening testdriver\n");
+    printk(KERN_INFO"[%d:%d] Opening testdriver\n", MAJOR(inodp->i_rdev), MINOR(inodp->i_rdev));
     return 0;
 }
 
 static int testdriver_release(struct inode *inodp, struct file *filp)
 {
-    printk(KERN_INFO"Releasing testdriver\n");
+    printk(KERN_INFO"[%d:%d] Releasing testdriver\n", MAJOR(inodp->i_rdev), MINOR(inodp->i_rdev));
     return 0;
 }
 

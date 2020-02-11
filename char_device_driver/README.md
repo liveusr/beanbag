@@ -49,3 +49,8 @@
   - Use `copy_from_user()` function to read user buffer (signature? Hint: *linux/uaccess.h*)
   - Store this data and data length in some global variable and print it
   - Build and run
+  - Reference code: [click here](https://github.com/liveusr/beanbag/tree/44970f8fe1265bce4659cb8ddc97274adb70f9d8/char_device_driver)
+- **Send data to user**
+  - Use `copy_to_user()` function to write data to user buffer
+  - Copy previously stored data to user buffer
+  - Build and run

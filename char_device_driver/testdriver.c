@@ -10,8 +10,22 @@ MODULE_LICENSE("GPL");
 #define DEV_MAJOR   60
 #define DEV_NAME    "testdriver"
 
+static int testdriver_open(struct inode *inodp, struct file *filp)
+{
+    printk(KERN_INFO"Opening testdriver\n");
+    return 0;
+}
+
+static int testdriver_release(struct inode *inodp, struct file *filp)
+{
+    printk(KERN_INFO"Releasing testdriver\n");
+    return 0;
+}
+
 static struct file_operations dev_fops = {
     .owner = THIS_MODULE,
+    .open = testdriver_open,
+    .release = testdriver_release,
 };
 
 static int testdriver_init(void)

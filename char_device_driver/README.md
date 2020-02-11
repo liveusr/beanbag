@@ -22,3 +22,10 @@
   - Check `dmesg` output
   - Read/write to device file and check `dmesg` output
   - `rmmod` and check `dmesg` output
+  - Reference code: [click here](https://github.com/liveusr/beanbag/tree/bbda2c44fd9c36920d66d0ecbcdb4f595671ef78/char_device_driver)
+- **Add open() and release() functions**
+  - Write empty open() and release() functions (function signatures? Hint: *linux/fs.h*)
+  - Initialize `file_operations` object with both function’s pointer
+  - Build, `insmod` and check `dmesg` output
+  - Read/write to device file and check `dmesg` output
+  - `rmmod` and check `dmesg` output

@@ -10,7 +10,7 @@ MODULE_LICENSE("GPL");
 
 #define DEV_MAJOR   60
 #define DEV_NAME    "testdriver"
-#define DATA_COUNT  10
+#define DATA_COUNT  11      // FIXME: HACK: allocate an extra data buffer to fix issue in mychardev_read()
 
 static char data[DATA_COUNT][80];
 static int data_len[DATA_COUNT];
@@ -37,6 +37,9 @@ static ssize_t mychardev_read(struct file *filp, char __user *buf, size_t count,
     printk(KERN_INFO"[%d:%d] Reading testdriver\n", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev));
 
     if(r_index < 0)
+        r_index = DATA_COUNT - 1;
+
+    if(r_index == w_index) // FIXME: this condition skips oldest line since it is ready to be overwritten by w_index
         return 0;
 
     copy_to_user(buf, data[r_index], data_len[r_index]);
@@ -51,7 +54,7 @@ static ssize_t mychardev_write(struct file *filp, const char __user *buf, size_t
     copy_from_user(data[w_index], buf, count);
     data_len[w_index] = count;
     printk(KERN_INFO"[%d:%d] data = %s", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev), data[w_index]);
-    w_index++;
+    w_index = (w_index + 1) % DATA_COUNT;
 
     return count;
 }

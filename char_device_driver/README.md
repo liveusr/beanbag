@@ -7,3 +7,18 @@
   - Insert module using `insmod`
   - Check output of `dmesg` and `lsmod`
   - Remove module using `rmmod` and check `dmesg`/`lsmod` output
+  - Reference code: [click here](https://github.com/liveusr/beanbag/tree/d28fd3e51874b24c67269699cd0868e6dbd25b32/char_device_driver)
+- **Create a device file**
+  - What is device major and minor number?
+  - Create a character device file using `mknod`
+  - Read device file using `cat`
+  - Write to device file using `echo`
+  - Notice the error/message and `dmesg` output for both read/write
+- **Convert module to character device driver**
+  - Call `register_chardev()` from init() function
+  - `register_chardev()` arguments? - research! (Hint: check *linux/fs.h*)
+  - Call `unregister_chardev()` from exit() function
+  - Build and `insmod`
+  - Check `dmesg` output
+  - Read/write to device file and check `dmesg` output
+  - `rmmod` and check `dmesg` output

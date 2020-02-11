@@ -32,3 +32,8 @@
   - Reference code: [click here](https://github.com/liveusr/beanbag/tree/747e9751642f5859abc2eea7f094658e63103b04/char_device_driver)
 - **Print device major and minor number in open()/release() functions**
   - Find how to get the device number from `inode` object
+  - Reference code: [click here](https://github.com/liveusr/beanbag/tree/a76a7bfb42081564fe8587a0e655f895163d09c0/char_device_driver)
+- **Add read() and write() functions**
+  - Write empty read() and write() functions and update `file_operations` object
+  - Build, `insmod` and check `dmesg` output
+  - Read/write to device file and check `dmesg` output

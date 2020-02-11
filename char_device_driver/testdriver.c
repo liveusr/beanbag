@@ -22,10 +22,24 @@ static int testdriver_release(struct inode *inodp, struct file *filp)
     return 0;
 }
 
+static ssize_t mychardev_read(struct file *filp, char __user *buf, size_t count, loff_t *off)
+{
+    printk(KERN_INFO"Reading testdriver\n");
+    return 0;
+}
+
+static ssize_t mychardev_write(struct file *filp, const char __user *buf, size_t count, loff_t *off)
+{
+    printk(KERN_INFO"Writing testdriver\n");
+    return 0;
+}
+
 static struct file_operations dev_fops = {
     .owner = THIS_MODULE,
     .open = testdriver_open,
     .release = testdriver_release,
+    .read = mychardev_read,
+    .write = mychardev_write,
 };
 
 static int testdriver_init(void)

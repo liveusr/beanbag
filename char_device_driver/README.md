@@ -58,3 +58,7 @@
 - **Any issue?**
   - Why does `cat` print nothing?
   - Fix it (Hint: return data length from read())
+  - Reference code: [click here](https://github.com/liveusr/beanbag/tree/078e6bafb786c694e24437e7dc2239c4902b1def/char_device_driver)
+- **Any issue?**
+  - Why does `cat` get stuck in an infinite loop?
+  - Fix it (Hint: return `0` once data is read)

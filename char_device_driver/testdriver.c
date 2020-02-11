@@ -13,10 +13,14 @@ MODULE_LICENSE("GPL");
 
 static char data[80];
 static int data_len;
+static int read_flag;
 
 static int testdriver_open(struct inode *inodp, struct file *filp)
 {
     printk(KERN_INFO"[%d:%d] Opening testdriver\n", MAJOR(inodp->i_rdev), MINOR(inodp->i_rdev));
+
+    read_flag = 0;
+
     return 0;
 }
 
@@ -30,7 +34,11 @@ static ssize_t mychardev_read(struct file *filp, char __user *buf, size_t count,
 {
     printk(KERN_INFO"[%d:%d] Reading testdriver\n", MAJOR(filp->f_inode->i_rdev), MINOR(filp->f_inode->i_rdev));
 
+    if(read_flag == 1)
+        return 0;
+
     copy_to_user(buf, data, data_len);
+    read_flag = 1;
 
     return data_len;
 }
